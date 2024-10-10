@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DropArea Component renders correctly and matches snapshot 1`] = `
+<section
+  aria-label="drop-area-section"
+  style="width: 100%; height: 100px; background-color: rgb(255, 255, 255); border: 1px dashed #dcdcdc; border-radius: 10px; padding: 15px; margin-bottom: 15px; opacity: 0; transition: all 0.2s ease-in-out; cursor: default;"
+>
+  Drop Area
+</section>
+`;
