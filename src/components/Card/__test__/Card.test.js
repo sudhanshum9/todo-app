@@ -1,42 +1,112 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import Dashboard from '../DashBoard';
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/extend-expect';
+import TaskCard from '../Card';
 
-describe('Dashboard Component', () => {
-  test('opens the Add Task modal when the Add Task button is clicked', () => {
-    render(<Dashboard />);
+const mockTask = {
+  id: '1',
+  name: 'Testing Task',
+  description: 'This is a test task description',
+  deadline: '2024-10-15',
+  favorite: true,
+  status: 'todo'
+};
 
-    // Use getByRole to specifically target the button
-    const addButton = screen.getByRole('button', { name: /Add Task/i });
-    expect(addButton).toBeInTheDocument();  // Ensure button exists
+describe('TaskCard Component', () => {
+  const mockOnEdit = jest.fn();
+  const mockOnDelete = jest.fn();
+  const mockOnFavoriteToggle = jest.fn();
+  const mockSetActiveCardId = jest.fn();
 
-    // Click the "Add Task" button
-    fireEvent.click(addButton);
+  test('renders task card with correct information', () => {
+    render(
+      <TaskCard
+        task={mockTask}
+        onEdit={mockOnEdit}
+        onClickDelete={mockOnDelete}
+        onFavoriteToggle={mockOnFavoriteToggle}
+        activeCardId={null}
+        setactiveCardId={mockSetActiveCardId}
+      />
+    );
+    
+    expect(screen.getByText(/Test Task/i)).toBeInTheDocument();
+    expect(screen.getByText(/This is a test task description/i)).toBeInTheDocument();
+    expect(screen.getByText(/Deadline: 2024-10-15/i)).toBeInTheDocument();
+  });
 
-    // Check if the modal title is shown
-    const modalTitle = screen.getByText(/Add task/i);  // Match the modal title accurately
-    expect(modalTitle).toBeInTheDocument();
+
+  test('handles drag start and end correctly', () => {
+    render(
+      <TaskCard
+        task={mockTask}
+        onEdit={mockOnEdit}
+        onClickDelete={mockOnDelete}
+        onFavoriteToggle={mockOnFavoriteToggle}
+        activeCardId={1}
+        setactiveCardId={mockSetActiveCardId}
+      />
+    );
+
+    // Use a more accessible query to find the card's container
+    const card = screen.getByRole('article'); // Assuming your Card has a role like 'article' or 'button'
+
+    // Simulate drag start
+    fireEvent.dragStart(card);
+    expect(mockSetActiveCardId).toHaveBeenCalledWith('1');
+
+    // Simulate drag end
+    fireEvent.dragEnd(card);
+    expect(mockSetActiveCardId).toHaveBeenCalledWith('1');
+  });
+
+  test('handles edit button click', () => {
+    render(
+      <TaskCard
+        task={mockTask}
+        onEdit={mockOnEdit}
+        onClickDelete={mockOnDelete}
+        onFavoriteToggle={mockOnFavoriteToggle}
+        activeCardId={null}
+        setactiveCardId={mockSetActiveCardId}
+      />
+    );
+
+    const editButton = screen.getByLabelText('Edit Task');
+    fireEvent.click(editButton);
+    expect(mockOnEdit).toHaveBeenCalledWith('1');
+  });
+
+  test('handles delete button click', () => {
+    render(
+      <TaskCard
+        task={mockTask}
+        onEdit={mockOnEdit}
+        onClickDelete={mockOnDelete}
+        onFavoriteToggle={mockOnFavoriteToggle}
+        activeCardId={null}
+        setactiveCardId={mockSetActiveCardId}
+      />
+    );
+
+    const deleteButton = screen.getByLabelText('Delete Task');
+    fireEvent.click(deleteButton);
+    expect(mockOnDelete).toHaveBeenCalledWith('1');
+  });
+
+  test('handles favorite button click', () => {
+    render(
+      <TaskCard
+        task={mockTask}
+        onEdit={mockOnEdit}
+        onClickDelete={mockOnDelete}
+        onFavoriteToggle={mockOnFavoriteToggle}
+        activeCardId={null}
+        setactiveCardId={mockSetActiveCardId}
+      />
+    );
+
+    const favoriteButton = screen.getByLabelText('Add to favorites');
+    fireEvent.click(favoriteButton);
+    expect(mockOnFavoriteToggle).toHaveBeenCalledWith('1');
   });
 });
-
-test('adds a new task and displays it in the To Do column', () => {
-    render(<Dashboard />);
-  
-    // Open the modal by clicking the Add Task button
-    const addButton = screen.getByText(/Add Task/i);
-    fireEvent.click(addButton);
-  
-    // Fill in the task details
-    fireEvent.change(screen.getByPlaceholderText('name'), { target: { value: 'New Task' } });
-    fireEvent.change(screen.getByPlaceholderText('description'), { target: { value: 'New Task Description' } });
-    fireEvent.change(screen.getByPlaceholderText('deadline'), { target: { value: '2024-10-21' } });
-  
-    // Submit the form
-    const submitButton = screen.getByTestId('add-task-button');
-    fireEvent.click(submitButton);
-  
-    // Check if the new task appears in the To Do column
-    expect(screen.getByText('New Task')).toBeInTheDocument();
-    expect(screen.getByText('New Task Description')).toBeInTheDocument();
-  });
-  

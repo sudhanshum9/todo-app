@@ -1,36 +1,43 @@
 import { Container, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import TaskCard from "../TaskCard/TaskCard";
 import DropArea from "../DropArea/DropArea";
+import TaskCard from "../Card/Card";
 
-function TaskColumn({ title, onEdit, tasks, status, onDropTask, onClickDelete, onFavoriteToggle, setOpenModal, activeCardId, setactiveCardId }) {
-    return (
-        <Grid
-            justifyContent="center"
-            alignItems="center"
-            size="grow"
-        >
-            <Container><Typography variant="h4">{title}</Typography></Container>
-            <DropArea onDropTask={() => onDropTask(status, 0)} />
-            {tasks.map((task, index) => {
-                return (
-                    <>
-                        <TaskCard
-                            task={task}
-                            index={index}
-                            onEdit={onEdit}
-                            onClickDelete={onClickDelete}
-                            onFavoriteToggle={onFavoriteToggle}
-                            setOpenModal={setOpenModal}
-                            activeCardId={activeCardId}
-                            setactiveCardId={setactiveCardId}
-                        />
-                        <DropArea onDropTask={() => onDropTask(status, index+1)} />
-                    </>
-                );
-            })}
-        </Grid>
-    );
+function TaskColumn({
+  title,
+  onEdit,
+  tasks,
+  status,
+  onDropTask,
+  onClickDelete,
+  onFavoriteToggle,
+  activeCardId,
+  setactiveCardId,
+}) {
+  return (
+    <Grid container justifyContent="center" alignItems="center">
+      <Container>
+        <Typography variant="h4">{title}</Typography>
+      </Container>
+
+      <DropArea onDropTask={() => onDropTask(status, 0)} />
+
+      {tasks.map((task, index) => (
+        <div key={task.id}>
+          <TaskCard
+            task={task}
+            index={index}
+            onEdit={onEdit}
+            onClickDelete={onClickDelete}
+            onFavoriteToggle={onFavoriteToggle}
+            activeCardId={activeCardId}
+            setactiveCardId={setactiveCardId}
+          />
+          <DropArea onDropTask={() => onDropTask(status, index + 1)} />
+        </div>
+      ))}
+    </Grid>
+  );
 }
 
 export default TaskColumn;

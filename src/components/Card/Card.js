@@ -8,50 +8,66 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Delete, Edit } from '@mui/icons-material';
 
-export default function TaskCard({ task, onEdit, onClickDelete, onFavoriteToggle, index, activeCardId, setactiveCardId}) {
-
-  const handleEditOpen = (editTaskId) => {
-    onEdit(editTaskId);
-  };
-
- // Determine if the card is active
+export default function TaskCard({ task, onEdit, onClickDelete, onFavoriteToggle, activeCardId, setactiveCardId }) {
+  
+  // Determine if the card is active
   const isActive = activeCardId === task.id;
 
+  const handleEditOpen = () => {
+    onEdit(task.id);
+  };
+
+  const handleFavoriteToggle = () => {
+    onFavoriteToggle(task.id);
+  };
+
+  const handleDragStart = () => {
+    setactiveCardId(task.id);
+  };
+
+  const handleDragEnd = () => {
+    if (activeCardId !== null) {
+      setactiveCardId(null);
+    }
+  };
+
   return (
-    <div 
+    <div
+      role="article"
       draggable
-      onDragStart={() => setactiveCardId(task.id)}
-      onDragEnd={() => setactiveCardId(null)}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
       style={{
         opacity: isActive ? 0.7 : 1,
         border: isActive ? '1px solid black' : 'none',
-        cursor: 'grab',
+        cursor: isActive ? 'grabbing' : 'grab',
+        transition: 'opacity 0.2s ease',
       }}
     >
-    <Card sx={{ maxWidth: 345 }}>
-      <CardHeader
-        action={
-          <IconButton onClick={()=> handleEditOpen(task.id)}>
-            <Edit />
-          </IconButton>
-        }
-        title={task.name}
-        subheader={`Deadline- ${task.deadline}`}
-      />
-      <CardContent>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {task.description}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton onClick={() => onClickDelete(task.id)}>
-              <Delete />
+      <Card sx={{ maxWidth: 345 }}>
+        <CardHeader
+          action={
+            <IconButton onClick={handleEditOpen} aria-label="Edit Task">
+              <Edit />
             </IconButton>
-      </CardActions>
-    </Card>
+          }
+          title={task.name}
+          subheader={`Deadline: ${task.deadline}`}
+        />
+        <CardContent>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            {task.description}
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+          <IconButton onClick={handleFavoriteToggle} aria-label="Add to favorites">
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton onClick={() => onClickDelete(task.id)} aria-label="Delete Task">
+            <Delete />
+          </IconButton>
+        </CardActions>
+      </Card>
     </div>
   );
 }

@@ -4,9 +4,9 @@ import Grid from "@mui/material/Grid2";
 import { tokens } from "../../theme";
 import Header from "../../components/Header/Header";
 import TaskModal from "../../components/TaskModal/TaskModal";
-import AddEditForm from "../../components/AddEditTask/AddEditTask";
 import DeleteConfirmationModal from "../../components/DeleteModal/DeleteConfirmation";
 import TaskColumn from "../../components/TaskColumn/TaskColumn";
+import AddEditForm from "../../components/AddEditForm";
 
 const Dashboard = () => {
     const theme = useTheme();
