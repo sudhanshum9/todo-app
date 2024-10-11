@@ -29,7 +29,7 @@ const Dashboard = () => {
 
     const handleOpen = () => setOpenModal(true);
     const handleClose = () => setOpenModal(false);
-    
+
     const onEdit = (editTaskId) => {
         setOpenModal(true);
         setEditMode(true);
@@ -51,7 +51,7 @@ const Dashboard = () => {
     };
 
     const handleDeleteClose = () => setOpenDeleteModal(false);
-    
+
     const onDropTask = (status, position) => {
         if (!activeCardId) return;
         const taskToMove = taskList.find((task) => task.id === activeCardId);
@@ -59,6 +59,8 @@ const Dashboard = () => {
         taskToMove['status'] = status;
         updatedTaskList.splice(position, 0, taskToMove);
         setTaskList(updatedTaskList);
+        setActiveCardId(null);
+
     };
 
     const onFavoriteToggle = () => { };
@@ -90,55 +92,56 @@ const Dashboard = () => {
                     </Button>
                 </Box>
 
-                <Grid container spacing={3} style={{ marginTop: '30px', width: '100%', minHeight: '80vh' }}>
+                <Grid container spacing={2}>
                     {/* To Do Column */}
-                    <Grid item={true} xs={12} sm={4}>
+                    <Grid item size={4} >
                         <TaskColumn
-                            title='To Do'
+                            title="To Do"
                             tasks={todoTasks}
                             onEdit={onEdit}
                             onClickDelete={onClickDelete}
                             onFavoriteToggle={onFavoriteToggle}
                             setOpenModal={setOpenModal}
                             activeCardId={activeCardId}
-                            status='todo'
+                            status="todo"
                             onDropTask={onDropTask}
-                            setactiveCardId={setActiveCardId}
+                            setActiveCardId={setActiveCardId}
                         />
                     </Grid>
 
                     {/* In Progress Column */}
-                    <Grid item={true} xs={12} sm={4}>
+                    <Grid item size={4}>
                         <TaskColumn
-                            title='In Progress'
+                            title="In Progress"
                             tasks={inProgressTasks}
                             onEdit={onEdit}
                             onClickDelete={onClickDelete}
                             onFavoriteToggle={onFavoriteToggle}
                             setOpenModal={setOpenModal}
                             activeCardId={activeCardId}
-                            status='inProgress'
+                            status="inProgress"
                             onDropTask={onDropTask}
-                            setactiveCardId={setActiveCardId}
+                            setActiveCardId={setActiveCardId}
                         />
                     </Grid>
 
                     {/* Done Column */}
-                    <Grid item={true} xs={12} sm={4}>
+                    <Grid item size={4}>
                         <TaskColumn
-                            title='Done'
+                            title="Done"
                             tasks={doneTasks}
                             onEdit={onEdit}
                             onClickDelete={onClickDelete}
                             onFavoriteToggle={onFavoriteToggle}
                             setOpenModal={setOpenModal}
                             activeCardId={activeCardId}
-                            status='done'
+                            status="done"
                             onDropTask={onDropTask}
-                            setactiveCardId={setActiveCardId}
+                            setActiveCardId={setActiveCardId}
                         />
                     </Grid>
                 </Grid>
+
             </Box>
 
             {/* Modals */}

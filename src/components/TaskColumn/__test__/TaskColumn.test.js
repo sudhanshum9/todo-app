@@ -43,7 +43,7 @@ describe('TaskColumn Component', () => {
         onFavoriteToggle={mockOnFavoriteToggle}
         onDropTask={mockOnDropTask}
         activeCardId={null}
-        setactiveCardId={mockSetActiveCardId}
+        setActiveCardId={mockSetActiveCardId}
       />
     );
 
@@ -66,7 +66,7 @@ describe('TaskColumn Component', () => {
         onFavoriteToggle={mockOnFavoriteToggle}
         onDropTask={mockOnDropTask}
         activeCardId={null}
-        setactiveCardId={mockSetActiveCardId}
+        setActiveCardId={mockSetActiveCardId}
       />
     );
 
@@ -89,7 +89,7 @@ describe('TaskColumn Component', () => {
         onFavoriteToggle={mockOnFavoriteToggle}
         onDropTask={mockOnDropTask}
         activeCardId={null}
-        setactiveCardId={mockSetActiveCardId}
+        setActiveCardId={mockSetActiveCardId}
       />
     );
 
@@ -112,7 +112,7 @@ describe('TaskColumn Component', () => {
         onFavoriteToggle={mockOnFavoriteToggle}
         onDropTask={mockOnDropTask}
         activeCardId={null}
-        setactiveCardId={mockSetActiveCardId}
+        setActiveCardId={mockSetActiveCardId}
       />
     );
 
@@ -135,7 +135,7 @@ describe('TaskColumn Component', () => {
         onFavoriteToggle={mockOnFavoriteToggle}
         onDropTask={mockOnDropTask}
         activeCardId={null}
-        setactiveCardId={mockSetActiveCardId}
+        setActiveCardId={mockSetActiveCardId}
       />
     );
 

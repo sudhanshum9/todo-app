@@ -25,7 +25,7 @@ describe('TaskCard Component', () => {
         onClickDelete={mockOnDelete}
         onFavoriteToggle={mockOnFavoriteToggle}
         activeCardId={null}
-        setactiveCardId={mockSetActiveCardId}
+        setActiveCardId={mockSetActiveCardId}
       />
     );
     
@@ -43,7 +43,7 @@ describe('TaskCard Component', () => {
         onClickDelete={mockOnDelete}
         onFavoriteToggle={mockOnFavoriteToggle}
         activeCardId={1}
-        setactiveCardId={mockSetActiveCardId}
+        setActiveCardId={mockSetActiveCardId}
       />
     );
 
@@ -67,7 +67,7 @@ describe('TaskCard Component', () => {
         onClickDelete={mockOnDelete}
         onFavoriteToggle={mockOnFavoriteToggle}
         activeCardId={null}
-        setactiveCardId={mockSetActiveCardId}
+        setActiveCardId={mockSetActiveCardId}
       />
     );
 
@@ -84,7 +84,7 @@ describe('TaskCard Component', () => {
         onClickDelete={mockOnDelete}
         onFavoriteToggle={mockOnFavoriteToggle}
         activeCardId={null}
-        setactiveCardId={mockSetActiveCardId}
+        setActiveCardId={mockSetActiveCardId}
       />
     );
 
@@ -101,7 +101,7 @@ describe('TaskCard Component', () => {
         onClickDelete={mockOnDelete}
         onFavoriteToggle={mockOnFavoriteToggle}
         activeCardId={null}
-        setactiveCardId={mockSetActiveCardId}
+        setActiveCardId={mockSetActiveCardId}
       />
     );
 

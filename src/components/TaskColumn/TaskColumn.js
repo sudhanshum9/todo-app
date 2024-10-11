@@ -1,5 +1,4 @@
-import { Container, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid2";
+import { Box, Container, Typography } from "@mui/material";
 import DropArea from "../DropArea/DropArea";
 import TaskCard from "../Card/Card";
 
@@ -12,12 +11,12 @@ function TaskColumn({
   onClickDelete,
   onFavoriteToggle,
   activeCardId,
-  setactiveCardId,
+  setActiveCardId,
 }) {
   return (
-    <Grid container justifyContent="center" alignItems="center">
+    <Box margin={2}>
       <Container>
-        <Typography variant="h4">{title}</Typography>
+        <Typography variant="h4" style={{textAlign: 'center'}}>{title}</Typography>
       </Container>
 
       <DropArea onDropTask={() => onDropTask(status, 0)} />
@@ -31,12 +30,12 @@ function TaskColumn({
             onClickDelete={onClickDelete}
             onFavoriteToggle={onFavoriteToggle}
             activeCardId={activeCardId}
-            setactiveCardId={setactiveCardId}
+            setActiveCardId={setActiveCardId}
           />
           <DropArea onDropTask={() => onDropTask(status, index + 1)} />
         </div>
       ))}
-    </Grid>
+    </Box>
   );
 }
 

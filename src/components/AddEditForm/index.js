@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import React, { useEffect, useState } from "react";
-import { TextField, Button, Checkbox, Stack, InputLabel, Select, MenuItem } from "@mui/material";
+import { TextField, Button, Checkbox, Stack, InputLabel, Select, MenuItem, Typography, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 
@@ -50,14 +50,16 @@ const AddEditForm = ({
   };
 
   return (
-    <React.Fragment>
-      <h2>Fill task Details</h2>
+    <Box sx={{ p: 4, maxWidth: '500px', margin: '0 auto', backgroundColor: '#f9f9f9', borderRadius: 2, boxShadow: 2 }}>
+      <Typography variant="h4" gutterBottom>
+        {isEditMode ? "Edit Task" : "Add New Task"}
+      </Typography>
       <form onSubmit={handleSubmit} action={<Link to="/" />}>
         <TextField
           name="name"
           placeholder="Task Name"
           type="text"
-          sx={{ mb: 4 }}
+          sx={{ mb: 3 }}
           variant="outlined"
           color="secondary"
           label="Task Name"
@@ -77,33 +79,39 @@ const AddEditForm = ({
           value={task.description}
           fullWidth
           required
-          sx={{ mb: 4 }}
+          sx={{ mb: 3 }}
         />
         <TextField
           name="deadline"
-          helperText="Task Deadline"
           label="Task Deadline"
           type="date"
-          margin="normal"
           value={task.deadline}
           required
           onChange={handleChange}
+          fullWidth
+          sx={{ mb: 3 }}
+          InputLabelProps={{
+            shrink: true,
+          }}
         />
-        <Checkbox
-          name="favorite"
-          icon={<FavoriteBorder />}
-          checkedIcon={<Favorite />}
-          onChange={(e) => setTask((prev) => ({ ...prev, favorite: e.target.checked }))}
-          checked={task.favorite || false}
-        />
-        <Stack>
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+          <Checkbox
+            name="favorite"
+            icon={<FavoriteBorder />}
+            checkedIcon={<Favorite />}
+            onChange={(e) => setTask((prev) => ({ ...prev, favorite: e.target.checked }))}
+            checked={task.favorite || false}
+          />
+          <Typography variant="body1">Mark as Favorite</Typography>
+        </Box>
+        <Stack sx={{ mb: 3 }}>
           <InputLabel id="status-label">Status</InputLabel>
           <Select
             name="status"
             labelId="status-label"
             value={task.status}
-            label="Status"
             onChange={handleChange}
+            fullWidth
           >
             <MenuItem value="todo">To Do</MenuItem>
             <MenuItem value="inProgress">In Progress</MenuItem>
@@ -111,16 +119,15 @@ const AddEditForm = ({
           </Select>
         </Stack>
         <Button
-          data-testid="add-task-button"
-          variant="outlined"
+          variant="contained"
           color="secondary"
-          sx={{ mt: 4 }}
+          sx={{ mt: 2, width: '100%' }}
           type="submit"
         >
-          {isEditMode ? 'Update' : 'Add'}
+          {isEditMode ? 'Update Task' : 'Add Task'}
         </Button>
       </form>
-    </React.Fragment>
+    </Box>
   );
 };
 
