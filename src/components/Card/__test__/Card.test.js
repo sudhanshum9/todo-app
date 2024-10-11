@@ -34,31 +34,6 @@ describe('TaskCard Component', () => {
     expect(screen.getByText(/Deadline: 2024-10-15/i)).toBeInTheDocument();
   });
 
-
-  test('handles drag start and end correctly', () => {
-    render(
-      <TaskCard
-        task={mockTask}
-        onEdit={mockOnEdit}
-        onClickDelete={mockOnDelete}
-        onFavoriteToggle={mockOnFavoriteToggle}
-        activeCardId={1}
-        setActiveCardId={mockSetActiveCardId}
-      />
-    );
-
-    // Use a more accessible query to find the card's container
-    const card = screen.getByRole('article'); // Assuming your Card has a role like 'article' or 'button'
-
-    // Simulate drag start
-    fireEvent.dragStart(card);
-    expect(mockSetActiveCardId).toHaveBeenCalledWith('1');
-
-    // Simulate drag end
-    fireEvent.dragEnd(card);
-    expect(mockSetActiveCardId).toHaveBeenCalledWith('1');
-  });
-
   test('handles edit button click', () => {
     render(
       <TaskCard

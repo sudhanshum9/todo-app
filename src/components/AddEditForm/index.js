@@ -97,10 +97,12 @@ const AddEditForm = ({
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
           <Checkbox
             name="favorite"
+            label="Favorite Task"
             icon={<FavoriteBorder />}
             checkedIcon={<Favorite />}
             onChange={(e) => setTask((prev) => ({ ...prev, favorite: e.target.checked }))}
             checked={task.favorite || false}
+            inputProps={{ 'aria-pressed': task.favorite }}
           />
           <Typography variant="body1">Mark as Favorite</Typography>
         </Box>
@@ -119,12 +121,13 @@ const AddEditForm = ({
           </Select>
         </Stack>
         <Button
+          data-testid='add-task-button'
           variant="contained"
           color="secondary"
           sx={{ mt: 2, width: '100%' }}
           type="submit"
         >
-          {isEditMode ? 'Update Task' : 'Add Task'}
+          {isEditMode ? 'Update' : 'Add'}
         </Button>
       </form>
     </Box>

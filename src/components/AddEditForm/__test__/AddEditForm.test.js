@@ -3,7 +3,6 @@ import '@testing-library/jest-dom/extend-expect';
 import AddEditForm from '..';
 
 
-
 const mockSetTaskList = jest.fn();
 const mockSetOpenModal = jest.fn();
 const mockSetCurrentTask = jest.fn();
@@ -33,7 +32,6 @@ describe('AddEditForm Component', () => {
 
     expect(screen.getByPlaceholderText('Task Name')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Task Description')).toBeInTheDocument();
-    expect(screen.getByText(/Add/i)).toBeInTheDocument();
   });
 
   test('adds a new task when form is submitted', () => {

@@ -12,9 +12,10 @@ const Dashboard = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
+    const DEFAULT_TASK_LIST = [];
     const [taskList, setTaskList] = useState(() => {
         const savedTasks = localStorage.getItem("taskList");
-        return savedTasks ? JSON.parse(savedTasks) : [];
+        return savedTasks ? JSON.parse(savedTasks) : DEFAULT_TASK_LIST;
     });
 
     const [openModal, setOpenModal] = useState(false);
@@ -33,7 +34,7 @@ const Dashboard = () => {
     const onEdit = (editTaskId) => {
         setOpenModal(true);
         setEditMode(true);
-        const _editTask = taskList.find((task) => task.id === editTaskId);
+        const _editTask = taskList.find((task) => task.id === editTaskId) || {};
         setCurrentTask(_editTask);
     };
 
@@ -54,18 +55,26 @@ const Dashboard = () => {
 
     const onDropTask = (status, position) => {
         if (!activeCardId) return;
-        const taskToMove = taskList.find((task) => task.id === activeCardId);
-        const updatedTaskList = taskList.filter((task) => task.id !== activeCardId);
-        taskToMove['status'] = status;
+
+        const taskToMoveIndex = taskList.findIndex((task) => task.id === activeCardId);
+        if (taskToMoveIndex === -1) return;
+
+        const updatedTaskList = [...taskList];
+        const [taskToMove] = updatedTaskList.splice(taskToMoveIndex, 1);
+        taskToMove.status = status;
+
         updatedTaskList.splice(position, 0, taskToMove);
         setTaskList(updatedTaskList);
         setActiveCardId(null);
-
     };
 
-    const onFavoriteToggle = () => { };
+    const onFavoriteToggle = (task) => {
+        const updatedTaskList = taskList.map(t =>
+            t.id === task.id ? { ...t, favorite: !t.favorite } : t
+        );
+        setTaskList(updatedTaskList);
+    };
 
-    // Filter tasks by status
     const todoTasks = taskList.filter((task) => task.status === "todo");
     const inProgressTasks = taskList.filter((task) => task.status === "inProgress");
     const doneTasks = taskList.filter((task) => task.status === "done");
@@ -93,8 +102,7 @@ const Dashboard = () => {
                 </Box>
 
                 <Grid container spacing={2}>
-                    {/* To Do Column */}
-                    <Grid item size={4} >
+                    <Grid item size={4}>
                         <TaskColumn
                             title="To Do"
                             tasks={todoTasks}
@@ -109,7 +117,6 @@ const Dashboard = () => {
                         />
                     </Grid>
 
-                    {/* In Progress Column */}
                     <Grid item size={4}>
                         <TaskColumn
                             title="In Progress"
@@ -125,7 +132,6 @@ const Dashboard = () => {
                         />
                     </Grid>
 
-                    {/* Done Column */}
                     <Grid item size={4}>
                         <TaskColumn
                             title="Done"
@@ -141,10 +147,8 @@ const Dashboard = () => {
                         />
                     </Grid>
                 </Grid>
-
             </Box>
 
-            {/* Modals */}
             <TaskModal open={openModal} handleClose={handleClose}>
                 <AddEditForm
                     taskDetails={currentTask}

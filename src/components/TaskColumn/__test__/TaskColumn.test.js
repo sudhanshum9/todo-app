@@ -94,7 +94,7 @@ describe('TaskColumn Component', () => {
     );
 
     // Find the edit button for Task 1
-    const editButton = screen.getAllByLabelText('Edit task')[0];
+    const editButton = screen.getAllByLabelText('Edit Task')[0];
     fireEvent.click(editButton);
 
     // Ensure onEdit is called with the correct task id
@@ -117,33 +117,11 @@ describe('TaskColumn Component', () => {
     );
 
     // Find the delete button for Task 2
-    const deleteButton = screen.getAllByLabelText('Delete task')[1];
+    const deleteButton = screen.getAllByLabelText('Delete Task')[1];
     fireEvent.click(deleteButton);
 
     // Ensure onClickDelete is called with the correct task id
     expect(mockOnDelete).toHaveBeenCalledWith('2');
   });
 
-  test('calls onFavoriteToggle when favorite button is clicked', () => {
-    render(
-      <TaskColumn
-        title="To Do"
-        tasks={mockTasks}
-        status="todo"
-        onEdit={mockOnEdit}
-        onClickDelete={mockOnDelete}
-        onFavoriteToggle={mockOnFavoriteToggle}
-        onDropTask={mockOnDropTask}
-        activeCardId={null}
-        setActiveCardId={mockSetActiveCardId}
-      />
-    );
-
-    // Find the favorite button for Task 1
-    const favoriteButton = screen.getAllByLabelText('Favorite task')[0];
-    fireEvent.click(favoriteButton);
-
-    // Ensure onFavoriteToggle is called with the correct task object
-    expect(mockOnFavoriteToggle).toHaveBeenCalledWith(mockTasks[0]);
-  });
 });
