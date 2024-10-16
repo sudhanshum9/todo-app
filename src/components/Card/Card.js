@@ -45,7 +45,7 @@ export default function TaskCard({ task, onEdit, onClickDelete, onFavoriteToggle
         cursor: isActive ? 'grabbing' : 'grab',
         transition: 'all 0.3s ease',
         backgroundColor: isActive ? '#f3f4f6' : 'white',
-        overflow:'hidden',
+        overflow: 'hidden',
         margin: 2,
         '&:hover': {
           boxShadow: '0px 6px 20px rgba(0, 0, 0, 0.15)',
@@ -66,6 +66,15 @@ export default function TaskCard({ task, onEdit, onClickDelete, onFavoriteToggle
             padding: '8px 16px',
           }}
         />
+        {task.image && (
+          <Box sx={{ textAlign: 'center', overflow: 'hidden' }}>
+            <img 
+              src={task.image} 
+              alt="Task" 
+              style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', borderRadius: '0 0 8px 8px' }}
+            />
+          </Box>
+        )}
         <CardContent>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             {task.description}
@@ -73,7 +82,7 @@ export default function TaskCard({ task, onEdit, onClickDelete, onFavoriteToggle
         </CardContent>
         <CardActions disableSpacing sx={{ justifyContent: 'space-between' }}>
           <IconButton onClick={handleFavoriteToggle} aria-label="Add to favorites">
-            <FavoriteIcon sx={{ color: task.isFavorite ? '#ff1744' : '#e0e0e0' }} />
+            <FavoriteIcon sx={{ color: task.favorite ? '#ff1744' : '#e0e0e0' }} />
           </IconButton>
           <IconButton onClick={() => onClickDelete(task.id)} aria-label="Delete Task">
             <Delete sx={{ color: '#d32f2f' }} />

@@ -30,6 +30,7 @@ describe('TaskModal Component', () => {
     // Modal content should not be in the document when open is false
     expect(screen.queryByText(/Modal Content/i)).not.toBeInTheDocument();
   });
+  
   test('renders children correctly inside the modal', () => {
     render(
       <TaskModal open={true} handleClose={mockHandleClose}>

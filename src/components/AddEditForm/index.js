@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { TextField, Button, Checkbox, Stack, InputLabel, Select, MenuItem, Typography, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
+import { tokens } from "../../theme";
+import { useTheme } from "@emotion/react";
 
 const AddEditForm = ({
   taskDetails,
@@ -19,19 +21,38 @@ const AddEditForm = ({
     deadline: "",
     favorite: false,
     status: "todo",
+    image: null,
   };
 
   const [task, setTask] = useState(defaultForm);
+  const [imagePreview, setImagePreview] = useState(null);
+  const theme = useTheme();
+  const colors = tokens(theme.palette);
 
   useEffect(() => {
     if (isEditMode && taskDetails) {
       setTask(taskDetails);
+      if (taskDetails.image) {
+        setImagePreview(taskDetails.image);
+      }
     }
   }, [taskDetails, isEditMode]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setTask((prevTask) => ({ ...prevTask, [name]: value }));
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setTask((prevTask) => ({ ...prevTask, image: reader.result }));
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = (event) => {
@@ -47,6 +68,7 @@ const AddEditForm = ({
     setOpenModal(false);
     setCurrentTask({});
     setEditMode(false);
+    setImagePreview(null);
   };
 
   return (
@@ -61,7 +83,7 @@ const AddEditForm = ({
           type="text"
           sx={{ mb: 3 }}
           variant="outlined"
-          color="secondary"
+          color={colors.greenAccent[500]}
           label="Task Name"
           onChange={handleChange}
           value={task.name}
@@ -94,6 +116,26 @@ const AddEditForm = ({
             shrink: true,
           }}
         />
+        <Box sx={{ mb: 3 }}>
+          <Button variant="outlined" component="label">
+            Upload Image
+            <input
+              type="file"
+              accept="image/*"
+              hidden
+              onChange={handleImageUpload}
+            />
+          </Button>
+          {imagePreview && (
+            <Box sx={{ mt: 2, textAlign: 'center' }}>
+              <img 
+                src={imagePreview} 
+                alt="Task Thumbnail" 
+                style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '8px' }} 
+              />
+            </Box>
+          )}
+        </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
           <Checkbox
             name="favorite"
@@ -123,7 +165,7 @@ const AddEditForm = ({
         <Button
           data-testid='add-task-button'
           variant="contained"
-          color="secondary"
+          color='primary'
           sx={{ mt: 2, width: '100%' }}
           type="submit"
         >

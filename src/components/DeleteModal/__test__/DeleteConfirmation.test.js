@@ -13,7 +13,7 @@ describe('DeleteConfirmationModal', () => {
     );
     
     // Check if the modal content is displayed when open
-    expect(screen.getByText(/Are you sure you want to delete the task/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', {selector: 'h6'})).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Confirm Deletion/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Cancel Deletion/i })).toBeInTheDocument();
   });
@@ -60,7 +60,8 @@ describe('DeleteConfirmationModal', () => {
     );
     
     // Check that aria attributes are present for accessibility
-    const modalTitle = screen.getByText(/Are you sure you want to delete the task/i);
+    const modalTitle = screen.getByRole('heading', {selector: 'h6'});
+
     expect(modalTitle).toHaveAttribute('id', 'delete-task-modal-title');
     expect(modalTitle).toBeInTheDocument();
   });
